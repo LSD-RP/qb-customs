@@ -91,6 +91,12 @@ function RepairVehicle()
     TriggerEvent('veh.randomDegredation',10,plyVeh,3)
 end
 
+RegisterNetEvent("qb-customs:repairCar")
+AddEventHandler("qb-customs:repairCar", function()
+    RepairVehicle()
+end)
+exports("qb-customs:repairCar")
+
 function GetCurrentMod(id)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
@@ -725,6 +731,7 @@ function enterLocation(locationsPos)
         else
             DisplayMenu(true, "mainMenu")
         end
+        -- DisplayMenu(true, "mainMenu")
 
         DisplayMenuContainer(true)
         PlaySoundFrontend(-1, "OK", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)

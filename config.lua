@@ -1,5 +1,5 @@
 maxVehiclePerformanceUpgrades = 0 -- Set to 0 to have all the upgrades
-vehicleBaseRepairCost = 600
+vehicleBaseRepairCost = 10000
 vehicleRepairCostMultiplier = 1
 moneyType = 'bank'
 
@@ -8,7 +8,11 @@ moneyType = 'bank'
 -- Add jobs specific to the garage.
 bennyGarages = {
     [1] = {coords = vector4(-211.55, -1324.55, 30.90, 319.73135375977), blip = true, useJob = false, job = {"mechanic", "police"}},
-    [2] = {coords = vector4(109.89, 6627.07, 31.78, 221.7938), blip = true, useJob = true, job = {"mechanic"}}
+    [2] = {coords = vector4(109.89, 6627.07, 31.78, 221.7938), blip = true, useJob = false, job = {"mechanic"}},
+    [3] = {coords = vector4(-313.63, -108.24, 39.02, 68.13), blip = true, useJob = false, job = {"mechanic"}},
+    [4] = {coords = vector4(1174.7379, 2640.1199, 37.3663, 357.9911), blip = true, useJob = false, job = {"mechanic"}},
+    [5] = {coords = vector4(-317.43, -118.58, 39.02, 64.66), blip = false, useJob = false, job = {"mechanic"}},
+    
 }
 
 --[[ bennyLocations = {
@@ -252,7 +256,7 @@ vehicleCustomisation = {
     {category = "Brake Upgrade", id = 12},
     {category = "Transmission Upgrade", id = 13},
     {category = "Suspension Upgrade", id = 15},
-    {category = "Armour Upgrade", id = 16},
+    -- {category = "Armour Upgrade", id = 16},
     {category = "Turbo Upgrade", id = 18},
     {category = "Vanity Plates",id = 25},
     {category = "Trim A", id = 27},
