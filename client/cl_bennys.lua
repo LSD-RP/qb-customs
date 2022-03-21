@@ -84,11 +84,43 @@ end
 function RepairVehicle()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local getFuel = GetVehicleFuelLevel(plyVeh)
+    Citizen.CreateThread(function()
+        local i = 0
+        while i < 5 do
+            SendNUIMessage({
+                playSoundEffect = true,
+                soundEffect = 'wrench',
+                volume = 0.4
+            })
+            Wait(2000)
+            i = i + 1
+        end
+    end)
 
-    SetVehicleFixed(plyVeh)
-	SetVehicleDirtLevel(plyVeh, 0.0)
-    SetVehiclePetrolTankHealth(plyVeh, 4000.0)
-    TriggerEvent('veh.randomDegredation',10,plyVeh,3)
+    QBCore.Functions.Progressbar("fix_vehicle", "Repairing Vehicle", 10000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        print("sound")
+        SendNUIMessage({
+            playSoundEffect = true,
+            soundEffect = 'wrench',
+            volume = 0.4
+        })
+
+        SetVehicleFixed(plyVeh)
+        SetVehicleDirtLevel(plyVeh, 0.0)
+        SetVehiclePetrolTankHealth(plyVeh, 4000.0)
+        SetVehicleFuelLevel(plyVeh, getFuel)
+        TriggerEvent('veh.randomDegredation',10,plyVeh,3)
+    end, function() -- Cancel
+        
+    end)
+
+    
 end
 
 RegisterNetEvent("qb-customs:repairCar")

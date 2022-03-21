@@ -1,23 +1,25 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local chicken = vehicleBaseRepairCost
+local repairCost = vehicleBaseRepairCost
 
 RegisterNetEvent('qb-customs:attemptPurchase', function(type, upgradeLevel)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
     local balance = nil
     if Player.PlayerData.job.name == "mechanic" then
-        balance = exports['qb-bossmenu']:GetAccount(Player.PlayerData.job.name)
+        balance = Player.Functions.GetMoney(moneyType)
     else
         balance = Player.Functions.GetMoney(moneyType)
     end
     if type == "repair" then
-        if balance >= chicken then
+        if balance >= repairCost then
             if Player.PlayerData.job.name == "mechanic" then
-                TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name, chicken)
+                Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', repairCost)
+                -- TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name, repairCost)
             else
-                Player.Functions.RemoveMoney(moneyType, chicken, "bennys")
-                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', chicken)
+                Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', repairCost)
             end
             TriggerClientEvent('qb-customs:purchaseSuccessful', source)
         else
@@ -29,11 +31,13 @@ RegisterNetEvent('qb-customs:attemptPurchase', function(type, upgradeLevel)
             TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].prices[upgradeLevel])
 
             if Player.PlayerData.job.name == "mechanic" then
-                TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name,
-                    vehicleCustomisationPrices[type].prices[upgradeLevel])
+                -- TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name,
+                --     vehicleCustomisationPrices[type].prices[upgradeLevel])
+                Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', vehicleCustomisationPrices[type].prices[upgradeLevel])
             else
                 Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
-                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', chicken)
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', vehicleCustomisationPrices[type].prices[upgradeLevel])
             end
         else
             TriggerClientEvent('qb-customs:purchaseFailed', source)
@@ -43,11 +47,13 @@ RegisterNetEvent('qb-customs:attemptPurchase', function(type, upgradeLevel)
             TriggerClientEvent('qb-customs:purchaseSuccessful', source)
             TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].price)
             if Player.PlayerData.job.name == "mechanic" then
-                TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name,
-                    vehicleCustomisationPrices[type].price)
+                -- TriggerEvent('qb-bossmenu:server:removeAccountMoney', Player.PlayerData.job.name,
+                --     vehicleCustomisationPrices[type].price)
+                Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', vehicleCustomisationPrices[type].price)
             else
                 Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
-                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', chicken)
+                TriggerEvent("qb-bossmenu:server:addAccountMoney", 'mechanic', vehicleCustomisationPrices[type].price)
             end
         else
             TriggerClientEvent('qb-customs:purchaseFailed', source)
@@ -56,19 +62,19 @@ RegisterNetEvent('qb-customs:attemptPurchase', function(type, upgradeLevel)
 end)
 
 RegisterNetEvent('qb-customs:updateRepairCost', function(cost)
-    chicken = cost
+    repairCost = cost
 end)
 
 RegisterNetEvent("updateVehicle", function(myCar)
     local src = source
     if IsVehicleOwned(myCar.plate) then
-        exports.oxmysql:execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(myCar), myCar.plate})
+        MySQL.Async.execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(myCar), myCar.plate})
     end
 end)
 
 function IsVehicleOwned(plate)
     local retval = false
-    local result = exports.oxmysql:scalarSync('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
+    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
     if result then
         retval = true
     end
