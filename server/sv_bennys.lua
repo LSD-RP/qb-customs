@@ -80,3 +80,9 @@ function IsVehicleOwned(plate)
     end
     return retval
 end
+
+QBCore.Commands.Add('monkeygarage', '', {}, false, function(source, args)
+	local src = source
+    print("cmd")
+	TriggerClientEvent('qb-customs:triggerGarageMonkey', src)
+end)

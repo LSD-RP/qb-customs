@@ -15,7 +15,8 @@ shared_script 'config.lua'
 
 client_scripts {
     'client/cl_ui.lua',
-    'client/cl_bennys.lua'
+    'client/cl_bennys.lua',
+    'client/cl_garagemonkey.lua'
 }
 
 server_scripts {
