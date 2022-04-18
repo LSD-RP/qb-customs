@@ -156,12 +156,13 @@ function RepairVehicle()
             volume = 0.4
         })
 
-    SetVehicleFixed(plyVeh)
-	SetVehicleDirtLevel(plyVeh, 0.0)
-    SetVehiclePetrolTankHealth(plyVeh, 4000.0)
-    SetVehicleFuelLevel(plyVeh, getFuel)
+        SetVehicleFixed(plyVeh)
+        SetVehicleDirtLevel(plyVeh, 0.0)
+        SetVehiclePetrolTankHealth(plyVeh, 4000.0)
+        SetVehicleFuelLevel(plyVeh, getFuel)
 
-    for i = 0,5 do SetVehicleTyreFixed(plyVeh, i) end
+        for i = 0,5 do SetVehicleTyreFixed(plyVeh, i) end
+    end
 end
 
 RegisterNetEvent("qb-customs:repairCar")

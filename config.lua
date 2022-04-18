@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-maxVehiclePerformanceUpgrades = 0 -- Set to 0 to have all the upgrades
-vehicleBaseRepairCost = 10000
-vehicleRepairCostMultiplier = 1
-moneyType = 'bank'
-
--- Location Configs
--- Add locations here
--- Add jobs specific to the garage.
-bennyGarages = {
-    [1] = {coords = vector4(-211.55, -1324.55, 30.90, 319.73135375977), blip = true, useJob = false, job = {"mechanic", "police"}},
-    [2] = {coords = vector4(109.89, 6627.07, 31.78, 221.7938), blip = true, useJob = false, job = {"mechanic"}},
-    [3] = {coords = vector4(-313.63, -108.24, 39.02, 68.13), blip = true, useJob = false, job = {"mechanic"}},
-    [4] = {coords = vector4(1174.7379, 2640.1199, 37.3663, 357.9911), blip = true, useJob = false, job = {"mechanic"}},
-    [5] = {coords = vector4(-317.43, -118.58, 39.02, 64.66), blip = false, useJob = false, job = {"mechanic"}},
-    [6] = {coords = vector4(-1350.48, 154.08, -99.19, 39.74), blip = false, useJob = false, job = {"mechanic"}},
-    [7] = {coords = vector4(731.8, -1089.53, 22.17, 72.04), blip = true, useJob = false, job = {"mechanic"}},
-}
-=======
 Config = Config or {}
 
 Config.Debug = false -- Set to True to enable Debug Prints
@@ -24,7 +5,6 @@ Config.MoneyType = 'bank'
 Config.RepairMoneyType = 'cash'
 Config.UseRadial = false -- Will use qb-radial menu for entering instead of press E
 Config.allowGovPlateIndex = false -- Setting this to true will allow all vehicles to purchase gov plate index "Blue on White #3" (only for emergency vehicles otherwise)
->>>>>>> upstream/main
 
 maxVehiclePerformanceUpgrades = 0 -- | All Upgrades: 0 | No Upgrades: -1 | Can be -1 to 4
 vehicleBaseRepairCost = 600
