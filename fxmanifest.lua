@@ -11,9 +11,14 @@ files {
     'html/sounds/respray.ogg'
 }
 
-shared_script 'config.lua'
+shared_scripts {
+    'config.lua',
+    'shared/locations.lua',
+}
 
 client_scripts {
+    '@PolyZone/client.lua',
+    '@PolyZone/BoxZone.lua',
     'client/cl_ui.lua',
     'client/cl_bennys.lua',
     'client/cl_garagemonkey.lua'
