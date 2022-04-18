@@ -45,6 +45,46 @@ local function saveVehicle()
     TriggerServerEvent('qb-customs:server:updateVehicle', myCar)
 end
 
+local function isNear(pos1, pos2, distMustBe)
+    local diff = pos2 - pos1
+	local dist = (diff.x * diff.x) + (diff.y * diff.y)
+
+	return (dist < (distMustBe * distMustBe))
+end
+
+function Draw3DText(x, y, z, str, r, g, b, a, font, scaleSize, enableProportional, enableCentre, enableOutline, enableShadow, sDist, sR, sG, sB, sA)
+    local onScreen, worldX, worldY = World3dToScreen2d(x, y, z)
+    local gameplayCamX, gameplayCamY, gameplayCamZ = table.unpack(GetGameplayCamCoords())
+
+    if onScreen then
+        SetTextScale(1.0, scaleSize)
+        SetTextFont(font)
+        SetTextColour(r, g, b, a)
+        SetTextEdge(2, 0, 0, 0, 150)
+
+        if enableProportional then
+            SetTextProportional(1)
+        end
+
+        if enableOutline then
+            SetTextOutline()
+        end
+
+        if enableShadow then
+            SetTextDropshadow(sDist, sR, sG, sB, sA)
+            SetTextDropShadow()
+        end
+
+        if enableCentre then
+            SetTextCentre(1)
+        end
+
+        SetTextEntry("STRING")
+        AddTextComponentString(str)
+        DrawText(worldX, worldY)
+    end
+end
+
 local function CreateBlip(blipData)
     local blip = AddBlipForCoord(blipData.coords.x, blipData.coords.y, blipData.coords.z)
     SetBlipSprite(blip, blipData.sprite)
@@ -162,7 +202,7 @@ function RepairVehicle()
         SetVehicleFuelLevel(plyVeh, getFuel)
 
         for i = 0,5 do SetVehicleTyreFixed(plyVeh, i) end
-    end
+    end)
 end
 
 RegisterNetEvent("qb-customs:repairCar")
@@ -1098,4 +1138,61 @@ RegisterNetEvent('qb-customs:client:EnterCustoms', function(override)
     if not override and next(CustomsData) and not CheckRestrictions(CustomsData.location) then return end
 
     EnterLocation(override)
+end)
+
+-- Citizen.CreateThread(function()
+--     while true do
+--         local sleep = 5000
+--         local pCoords = GetEntity
+--         for location, data in pairs(Config.Locations) do
+--             -- PolyZone + Drawtext + Locations Management
+--             for i, spot in ipairs(data.zones) do
+
+--     end
+-- end)
+
+CreateThread(function()
+    while true do
+        local plyPed = PlayerPedId()
+
+        if IsPedInAnyVehicle(plyPed, false) then
+            local plyPos = GetEntityCoords(plyPed)
+            for location, data in pairs(Config.Locations) do
+                -- PolyZone + Drawtext + Locations Management
+                for i, v in ipairs(data.zones) do
+                    -- for k, v in pairs(bennyGarages) do
+
+                    nearDefault = isNear(plyPos, vector3(v.coords.x,v.coords.y,v.coords.z), 5)
+
+                    if nearDefault then
+                        if not isPlyInBennys and nearDefault then
+                            DrawMarker(21, v.coords.x, v.coords.y, v.coords.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
+                        end
+
+                        bennyLocation = vector3(v.coords.x, v.coords.y, v.coords.z)
+
+                        if nearDefault then
+                            if not isPlyInBennys then
+                                Draw3DText(v.coords.x, v.coords.y, v.coords.z + 0.5, "[Press ~p~E~w~ - Enter Benny's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
+                                -- if IsControlJustReleased(1, 38) then
+                                --     if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                --         if (v.useJob and isAuthorized((QBCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
+                                --             TriggerEvent('event:control:bennys', k)
+                                --         else
+                                --             QBCore.Functions.Notify("You are not authorized", "error")
+                                --         end
+                                --     end
+                                -- end
+                                -- disableControls()
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            Wait(2000)
+        end
+
+        Wait(1)
+    end
 end)
