@@ -235,9 +235,7 @@ function InitiateMenus(isMotorcycle, vehicleHealth, categories, welcomeLabel)
                     populateMenu("mainMenu", v.id, v.category, "none")
                 end
             elseif v.id == 14 then
-                print(categories.horns)
-                if categories.horns then
-                    print("yes horn")
+                if categories.horn then
                     populateMenu("mainMenu", v.id, v.category, "none")
                 end
             elseif v.id == 18 then
