@@ -849,7 +849,7 @@ function EnterLocation(override)
         extras = false,
         neons = false,
         xenons = false,
-        horn = false,
+        horn = true,
         turbo = false,
         cosmetics = false,
     }

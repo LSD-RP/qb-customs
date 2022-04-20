@@ -332,8 +332,8 @@ Config.Locations = {
         },
         restrictions = {  },
         zones = {
-            { coords = vector3(-313.49, -108.3, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 38.5, maxZ = 41.5 },
-            { coords = vector3(-317.33, -118.37, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 38.5, maxZ = 41.5 },
+            { coords = vector3(-313.49, -108.3, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 37.5, maxZ = 41.5 },
+            { coords = vector3(-317.33, -118.37, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 37.5, maxZ = 41.5 },
         }
     },
 

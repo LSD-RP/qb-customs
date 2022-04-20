@@ -42,6 +42,8 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
 	        exports['qb-management']:AddMoney("mechanic", repairCost)
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for $" .. repairCost)
+
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
         end
@@ -50,6 +52,8 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
             Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
 	        exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].prices[upgradeLevel]) 
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].prices[upgradeLevel])
+
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
         end
@@ -58,6 +62,8 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
             Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
             exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].price) 
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].price)
+
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
         end
