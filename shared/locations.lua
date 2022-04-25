@@ -71,7 +71,8 @@ Config.Locations = {
             enabled = true,
         },
         categories = {
-            mods = true, -- Performance Mods
+            mods = true,
+            turbo = true,
             repair = true,
             armor = false,
             respray = true,
@@ -113,6 +114,7 @@ Config.Locations = {
     --     },
     --     categories = {
     --         mods = true,
+    --         turbo = true,
     --         repair = true,
     --         respray = true,
     --         liveries = true,
@@ -151,7 +153,8 @@ Config.Locations = {
             enabled = true,
         },
         categories = {
-            mods = true, -- Performance Mods
+            mods = true,
+            turbo = true,
             repair = true,
             armor = false,
             respray = true,
@@ -192,7 +195,8 @@ Config.Locations = {
             enabled = true,
         },
         categories = {
-            mods = true, -- Performance Mods
+            mods = true,
+            turbo = true,
             repair = true,
             armor = false,
             respray = true,
@@ -234,6 +238,7 @@ Config.Locations = {
     --     },
     --     categories = {
     --         repair = true,
+    --         turbo = true,
     --         respray = true,
     --         liveries = true,
     --         wheels = true,
@@ -271,7 +276,8 @@ Config.Locations = {
             enabled = true,
         },
         categories = {
-            mods = true, -- Performance Mods
+            mods = true,
+            turbo = true,
             repair = true,
             armor = false,
             respray = true,
@@ -312,7 +318,8 @@ Config.Locations = {
             enabled = true,
         },
         categories = {
-            mods = true, -- Performance Mods
+            mods = true,
+            turbo = true,
             repair = true,
             armor = false,
             respray = true,

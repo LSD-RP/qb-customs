@@ -652,8 +652,8 @@ function ApplyMod(categoryID, modID)
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
 
     if categoryID == 18 then
-        ToggleVehicleMod(plyVeh, categoryID, modID)
-        originalTurboState = modID
+        ToggleVehicleMod(plyVeh, categoryID, modID+1)
+        originalTurboState = modID+1
     elseif categoryID == 11 or categoryID == 12 or categoryID== 13 or categoryID == 15 or categoryID == 16 then --Performance Upgrades
         originalCategory = categoryID
         originalMod = modID
