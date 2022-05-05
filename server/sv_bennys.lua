@@ -90,11 +90,11 @@ function IsVehicleOwned(plate)
     return retval
 end
 
-QBCore.Commands.Add('monkeygarage', '', {}, false, function(source, args)
-	local src = source
-    print("cmd")
-	TriggerClientEvent('qb-customs:triggerGarageMonkey', src)
-end)
+-- QBCore.Commands.Add('monkeygarage', '', {}, false, function(source, args)
+-- 	local src = source
+--     print("cmd")
+-- 	TriggerClientEvent('qb-customs:triggerGarageMonkey', src)
+-- end)
 -- Use somthing like this to dynamically enable/disable a location. Can be used to change anything at a location.
 -- TriggerEvent('qb-customs:server:UpdateLocation', 'Hayes', 'settings', 'enabled', test)
 
@@ -105,4 +105,27 @@ end)
 
 QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(source, cb)
 	cb(Config.Locations)
+end)
+
+QBCore.Functions.CreateCallback('qb-customs:server:GetMechanics', function(source, cb)
+    local amount = 0
+    local players = QBCore.Functions.GetQBPlayers()
+    for k,v in pairs(players) do
+        if v.PlayerData.job.name == 'mechanic' then
+			amount = amount + 1
+		end
+	end
+	cb(amount)
+end)
+
+QBCore.Functions.CreateCallback('qb-customs:server:isOwned', function(source, cb, plate)
+    print(plate)
+    print(IsVehicleOwned(plate))
+	cb(IsVehicleOwned(plate))
+end)
+
+RegisterNetEvent('qb-customs:server:chargeMonkey', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    Player.Functions.RemoveMoney('bank', 5000)
 end)

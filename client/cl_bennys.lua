@@ -972,14 +972,49 @@ function GetLocations()
 end
 
 function CheckForKeypress()
-    if next(CustomsData) then
-        CreateThread(function()
-            while next(CustomsData) and not isPlyInBennys do
-                if IsControlJustReleased(0, 38) and CheckRestrictions(CustomsData.location) then EnterLocation() return end
-                Wait(0)
+    local job = QBCore.Functions.GetPlayerData().job.name
+    -- print(job)
+    QBCore.Functions.TriggerCallback('qb-customs:server:GetMechanics', function(num)
+        if job == "mechanic" then
+            num = 0
+        end
+        if CustomsData.needMechOnline == true then
+            if num > 0 then
+                if next(CustomsData) then
+                    CreateThread(function()
+                        while next(CustomsData) and not isPlyInBennys do
+                            -- local text = "Customs is closed while a mechanic is online"
+                            -- exports['qb-core']:DrawText(text, 'left')
+                            QBCore.Functions.Notify("Customs is closed while a mechanic is online")
+                            -- if IsControlJustReleased(0, 38) and CheckRestrictions(CustomsData.location) then EnterLocation() return end
+                            Wait(5000)
+                        end
+                    end)
+                end
+            else
+                if next(CustomsData) then
+                    CreateThread(function()
+                        while next(CustomsData) and not isPlyInBennys do
+                            if IsControlJustReleased(0, 38) and CheckRestrictions(CustomsData.location) then EnterLocation() return end
+                            Wait(0)
+                        end
+                    end)
+                end
             end
-        end)
-    end
+        else
+            if next(CustomsData) then
+                CreateThread(function()
+                    while next(CustomsData) and not isPlyInBennys do
+                        
+                        if IsControlJustReleased(0, 38) and CheckRestrictions(CustomsData.location) then EnterLocation() return end
+                        Wait(0)
+                    end
+                end)
+            end
+        end
+        
+    end)
+    
 end
 
 -- If a player isnt in a vehicle, when they enter the zone, the closet vehicle is checked
@@ -1035,7 +1070,7 @@ function SetupInteraction()
         text = '[E] '..text
         CheckForKeypress()
     end
-    exports['qb-core']:DrawText(text, 'left')
+    -- exports['qb-core']:DrawText(text, 'left')
 end
 
 exports('GetCustomsData', function() if next(CustomsData) ~= nil then return CustomsData else return nil end end)
@@ -1066,6 +1101,7 @@ CreateThread(function()
                         ['coords'] = vector3(spot.coords.x, spot.coords.y, spot.coords.z),
                         ['heading'] = spot.heading,
                         ['drawtextui'] = data.drawtextui.text,
+                        ['needMechOnline'] = data.requireMechOnline
                     }
                     SetupInteraction()
                     CheckForGhostVehicle()
@@ -1139,17 +1175,6 @@ RegisterNetEvent('qb-customs:client:EnterCustoms', function(override)
 
     EnterLocation(override)
 end)
-
--- Citizen.CreateThread(function()
---     while true do
---         local sleep = 5000
---         local pCoords = GetEntity
---         for location, data in pairs(Config.Locations) do
---             -- PolyZone + Drawtext + Locations Management
---             for i, spot in ipairs(data.zones) do
-
---     end
--- end)
 
 CreateThread(function()
     while true do

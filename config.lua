@@ -14,7 +14,7 @@ vehicleRepairCostMultiplier = 1
 vehicleCustomisationPrices = {
     cosmetics = {price = 400},
     respray = {price = 1000},
-    performance = {prices = {0, 3250, 5500, 10450, 15250, 20500, 25000}},
+    performance = {prices = {0, 3250, 5500, 10450, 15250, 20500, 25000, 30000}},
     turbo = {prices = {0, 15000}},
     wheels = {price = 400},
     customwheels = {price = 600},

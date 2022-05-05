@@ -289,7 +289,10 @@ function InitiateMenus(isMotorcycle, vehicleHealth, categories, welcomeLabel)
                     tempNum = tempNum + 1
 
                     if maxVehiclePerformanceUpgrades == 0 then
-                        populateMenu(v.category:gsub("%s+", "") .. "Menu", n.id, n.name, "$" .. vehicleCustomisationPrices.performance.prices[tempNum])
+                        -- print(n.id or 'hi')
+                        -- print(n.name or '__')
+                        -- print(vehicleCustomisationPrices.performance.prices[tempNum])
+                        populateMenu(v.category:gsub("%s+", "") .. "Menu", n.id, n.name or '', "$" .. vehicleCustomisationPrices.performance.prices[tempNum])
 
                         if currentMod == n.id then
                             updateItem2Text(v.category:gsub("%s+", "") .. "Menu", n.id, "Installed")

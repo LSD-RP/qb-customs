@@ -90,6 +90,7 @@ Config.Locations = {
         drawtextui = {
             text = "Bennys Motorworks"
         },
+        requireMechOnline = true,
         restrictions = { },
         zones = {
             { coords = vector3(-212.55, -1320.56, 31.0), length = 6.0, width = 4.0, heading = 270.0, minZ = 29.88, maxZ = 33.48 },
@@ -172,6 +173,7 @@ Config.Locations = {
         drawtextui = {
             text = "Bennys Motorworks"
         },
+        requireMechOnline = true,
         restrictions = { },
         zones = {
             { coords = vector3(732.99, -1075.0, 22.17), length = 6.0, width = 4.0, heading = 180.0, minZ = 21.0, maxZ = 25.0 },
@@ -214,6 +216,7 @@ Config.Locations = {
         drawtextui = {
             text = "Bennys Motorworks"
         },
+        requireMechOnline = true,
         restrictions = { },
         zones = {
             { coords = vector3(1182.11, 2640.3, 37.75), length = 6.0, width = 4.0, heading = 0.0, minZ = 36.0, maxZ = 40.0 },
@@ -295,6 +298,7 @@ Config.Locations = {
         drawtextui = {
             text = "Bennys Motorworks"
         },
+        requireMechOnline = true,
         restrictions = {  },
         zones = {
             { coords = vector3(110.93, 6626.51, 31.79), length = 6.0, width = 4.0, heading = 225.0, minZ = 30.5, maxZ = 34.5 },
@@ -337,10 +341,94 @@ Config.Locations = {
         drawtextui = {
             text = "Bennys Motorworks"
         },
+        requireMechOnline = true,
         restrictions = {  },
         zones = {
             { coords = vector3(-313.49, -108.3, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 37.5, maxZ = 41.5 },
             { coords = vector3(-317.33, -118.37, 39.02), length = 6.0, width = 4.0, heading = 67.0, minZ = 37.5, maxZ = 41.5 },
+            { coords = vector3(-341.66, -142.74, 60.61), length = 7.0, width = 7.0, heading = 111.0, minZ = 59.0, maxZ = 70.0 },
+        }
+    },
+
+    ['WaterMech'] = {
+        settings = {
+            label = 'Bennys Waterworks',
+            welcomeLabel = "Welcome to Bennys Waterworks!",
+            enabled = true,
+        },
+        blip = {
+            label = 'Bennys Waterworks',
+            coords = vector3(-854.73, -1411.37, 0.34),
+            sprite = 72,
+            scale = 0.65,
+            color = 0,
+            display = 4,
+            enabled = true,
+        },
+        categories = {
+            mods = true,
+            turbo = true,
+            repair = true,
+            armor = false,
+            respray = true,
+            liveries = true,
+            wheels = false,
+            tint = true,
+            plate = true,
+            extras = true,
+            neons = true,
+            xenons = true,
+            horn = true,
+            turbo = true,
+            cosmetics = true, -- Cosmetic Mods
+        },
+        drawtextui = {
+            text = "Bennys Motorworks"
+        },
+        restrictions = {  },
+        zones = {
+            { coords = vector3(-854.73, -1411.35, 0.42), length = 6.0, width = 4.0, heading = 180.0, minZ = -1.5, maxZ = 10.5 },
+        }
+    },
+
+    ['Arena'] = {
+        settings = {
+            label = 'Bennys Motorworks',
+            welcomeLabel = "Welcome to Bennys Motorworks!",
+            enabled = true,
+        },
+        blip = {
+            label = 'Bennys Motorworks',
+            coords = vector3(2774.71, -3686.05, 139.38),
+            sprite = 72,
+            scale = 0.65,
+            color = 0,
+            display = 4,
+            enabled = false,
+        },
+        categories = {
+            mods = true,
+            turbo = true,
+            repair = true,
+            armor = false,
+            respray = true,
+            liveries = true,
+            wheels = false,
+            tint = true,
+            plate = true,
+            extras = true,
+            neons = true,
+            xenons = true,
+            horn = true,
+            turbo = true,
+            cosmetics = true, -- Cosmetic Mods
+        },
+        drawtextui = {
+            text = "Bennys Motorworks"
+        },
+        restrictions = {  },
+        zones = {
+            { coords = vector3(2814.17, -3894.05, 140.0), length = 6.0, width = 4.0, heading = 353.55, minZ = 135, maxZ = 150 },
         }
     },
 
