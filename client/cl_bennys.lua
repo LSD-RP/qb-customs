@@ -147,11 +147,13 @@ end
 
 --#[Global Functions]#--
 function AttemptPurchase(type, upgradeLevel)
-
+    local ped = PlayerPedId()
+    local veh = GetVehiclePedIsIn(ped)
+    local plate = GetVehicleNumberPlateText(veh)
     if upgradeLevel ~= nil then
         upgradeLevel = upgradeLevel + 2
     end
-    TriggerServerEvent("qb-customs:server:attemptPurchase", type, upgradeLevel)
+    TriggerServerEvent("qb-customs:server:attemptPurchase", type, upgradeLevel, plate)
 
     attemptingPurchase = true
 

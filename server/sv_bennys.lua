@@ -8,12 +8,12 @@ local RepairCosts = {}
 ----   Functions   ----
 -----------------------
 
-local function IsVehicleOwned(plate)
-    local retval = false
-    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
-    if result then retval = true end
-    return retval
-end
+-- local function IsVehicleOwned(plate)
+--     local retval = false
+--     local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
+--     if result then retval = true end
+--     return retval
+-- end
 
 -----------------------
 ----   Threads     ----
@@ -28,7 +28,7 @@ AddEventHandler("playerDropped", function()
     RepairCosts[source] = nil
 end)
 
-RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel)
+RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLevel, plate)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
     local moneyType = Config.MoneyType
@@ -42,7 +42,7 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             Player.Functions.RemoveMoney(moneyType, repairCost, "bennys")
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
 	        exports['qb-management']:AddMoney("mechanic", repairCost)
-            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for $" .. repairCost)
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for $" .. repairCost .. " on " .. plate)
 
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
@@ -52,7 +52,7 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
             Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].prices[upgradeLevel], "bennys")
 	        exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].prices[upgradeLevel]) 
-            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].prices[upgradeLevel])
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].prices[upgradeLevel] .. " on " .. plate)
 
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
@@ -62,7 +62,7 @@ RegisterNetEvent('qb-customs:server:attemptPurchase', function(type, upgradeLeve
             TriggerClientEvent('qb-customs:client:purchaseSuccessful', source)
             Player.Functions.RemoveMoney(moneyType, vehicleCustomisationPrices[type].price, "bennys")
             exports['qb-management']:AddMoney("mechanic", vehicleCustomisationPrices[type].price) 
-            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].price)
+            TriggerEvent("qb-log:server:CreateLog", "vehicleupgrades", "Customs", "green", "**"..GetPlayerName(source) .. "** purchased " ..type .. " for " .. vehicleCustomisationPrices[type].price .. " on " .. plate)
 
         else
             TriggerClientEvent('qb-customs:client:purchaseFailed', source)
@@ -82,12 +82,38 @@ RegisterNetEvent("qb-customs:server:updateVehicle", function(myCar)
 end)
 
 function IsVehicleOwned(plate)
+    local thisplate = trimWhitespace(plate)
     local retval = false
-    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
-    if result then
-        retval = true
-    end
+	exports.oxmysql:execute('SELECT 1 FROM player_vehicles WHERE plate LIKE @plate', {
+		['@plate'] = '%' ..thisplate.. '%'
+	}, function(result)
+		if result[1] == nil then
+			exports.oxmysql:execute('SELECT 1 from player_vehicles WHERE plate = @plate', {
+				['@plate'] = thisplate
+			}, function(result2)
+				if result2 then 
+                    retval = true
+                end
+			end)
+		else
+			if result then 
+                retval = true
+            end
+		end
+		
+	end)
+    Wait(2000)
     return retval
+end
+
+function trimWhitespace(text)
+    -- -- return text:gsub("%s+","")
+	-- return text
+	if text then
+		return (string.gsub(text, "^%s*(.-)%s*$", "%1"))
+	else
+		return "nil"
+	end
 end
 
 -- QBCore.Commands.Add('monkeygarage', '', {}, false, function(source, args)
@@ -119,8 +145,6 @@ QBCore.Functions.CreateCallback('qb-customs:server:GetMechanics', function(sourc
 end)
 
 QBCore.Functions.CreateCallback('qb-customs:server:isOwned', function(source, cb, plate)
-    print(plate)
-    print(IsVehicleOwned(plate))
 	cb(IsVehicleOwned(plate))
 end)
 
