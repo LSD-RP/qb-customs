@@ -8,12 +8,12 @@ local RepairCosts = {}
 ----   Functions   ----
 -----------------------
 
--- local function IsVehicleOwned(plate)
---     local retval = false
---     local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
---     if result then retval = true end
---     return retval
--- end
+local function IsVehicleOwned(plate)
+    local retval = false
+    local result = MySQL.scalar.await('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
+    if result then retval = true end
+    return retval
+end
 
 -----------------------
 ----   Threads     ----
@@ -77,7 +77,7 @@ end)
 
 RegisterNetEvent("qb-customs:server:updateVehicle", function(myCar)
     if IsVehicleOwned(myCar.plate) then
-        MySQL.Async.execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(myCar), myCar.plate})
+        MySQL.update('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(myCar), myCar.plate})
     end
 end)
 
@@ -129,7 +129,7 @@ RegisterNetEvent('qb-customs:server:UpdateLocation', function(location, type, ke
     TriggerClientEvent('qb-customs:client:UpdateLocation', -1, location, type, key, value)
 end)
 
-QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(source, cb)
+QBCore.Functions.CreateCallback('qb-customs:server:GetLocations', function(_, cb)
 	cb(Config.Locations)
 end)
 
