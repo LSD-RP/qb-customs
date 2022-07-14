@@ -432,6 +432,47 @@ Config.Locations = {
         }
     },
 
+    ['Airplanes'] = {
+        settings = {
+            label = 'Bennys Motorworks',
+            welcomeLabel = "Welcome to Bennys Motorworks!",
+            enabled = true,
+        },
+        blip = {
+            label = 'Bennys Motorworks',
+            coords = vector3(-1153.62, -3373.35, 13.94),
+            sprite = 72,
+            scale = 0.65,
+            color = 0,
+            display = 4,
+            enabled = true,
+        },
+        categories = {
+            mods = true,
+            turbo = true,
+            repair = true,
+            armor = false,
+            respray = true,
+            liveries = true,
+            wheels = false,
+            tint = true,
+            plate = true,
+            extras = true,
+            neons = true,
+            xenons = true,
+            horn = true,
+            turbo = true,
+            cosmetics = true, -- Cosmetic Mods
+        },
+        drawtextui = {
+            text = "Bennys Motorworks"
+        },
+        restrictions = { allowedClasses = {15, 16} },
+        zones = {
+            { coords = vector3(-1153.62, -3373.35, 13.94), length = 6.0, width = 4.0, heading = 20.28, minZ = 10, maxZ = 25 },
+        }
+    },
+
     -- ['Tunershop'] = {
     --     settings = {
     --         label = 'Tunershop',
